@@ -26,7 +26,11 @@ const Main = () => {
         } else if (route.name === 'Progress') {
           iconName = 'stats-chart-outline';
         }
-        return <Icon name={iconName} size={size} color={color} />;
+        return (
+            <View>
+                <Icon name={iconName} size={size} color={color} style={{ padding:'12' }} />
+            </View> )
+        //<Icon name={iconName} size={size} color={color} style={{ backgroundColor: 'red', padding:'8' }}/>;
       },
       tabBarActiveTintColor: '#e91e63'
     })}
