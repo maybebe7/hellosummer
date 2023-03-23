@@ -3,6 +3,8 @@ import { Table, TableWrapper, Rows, Row, Cell } from 'react-native-table-compone
 import { TextInput, StyleSheet } from 'react-native';
 
 const ExerciseTable = ({ sets }) => {
+
+
   const textStyle = {
     text: {
       fontSize: 14,

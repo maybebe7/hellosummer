@@ -8,6 +8,8 @@ const Home = () => {
 
 const navigation = useNavigation();
 
+console.log ("rending Home");
+
 return (
     <View style={styles.container}>
       <Text style={styles.title}>Home Screen</Text>

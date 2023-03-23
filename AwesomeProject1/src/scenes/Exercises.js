@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView} from 'react-native';
 import styles from '../styles/ExerciseStyles';
 import workouts from '../data/workouts';
@@ -8,21 +8,28 @@ import ExerciseTable from '../components/atoms/ExerciseTable';
 const Exercises = ({ route }) => {
   const { exercises: exerciseIds } = route.params;
 
+  console.log ("rending Exercises");
+
   const [collapsed, setCollapsed] = useState(true);
 
-  const getExerciseDetails = (id) => {
-    const exercise = exercises.find((e) => e._id === id);
-    if (!exercise) {
-      //console.log(`Exercise with _id ${id} not found`);
-    }
-    return exercise;
-  };
+  const exerciseDetails = useMemo(() => {
+    const details = {};
+    exerciseIds.forEach((id) => {
+      const exercise = exercises.find((e) => e._id === id);
+      if (exercise) {
+        details[id] = exercise;
+      } else {
+        //console.log(`Exercise with _id ${id} not found`);
+      }
+    });
+    return details;
+  }, [exerciseIds]);
 
   return (
     <View style={styles.container}>
       <ScrollView>
         {exerciseIds.map((id, index) => {
-          const exercise = getExerciseDetails(id);
+          const exercise = exerciseDetails[id];
 
           return (
             <TouchableOpacity

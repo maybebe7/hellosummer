@@ -6,6 +6,9 @@ import Button from '../components/atoms/Button';
 import styles from '../styles/LoginStyles';
 
 const Login = () => {
+
+console.log ("rending Login");
+
   const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

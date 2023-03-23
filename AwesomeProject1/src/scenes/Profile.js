@@ -7,6 +7,8 @@ import Button from '../components/atoms/Button';
 
 const Profile = () => {
 
+console.log ("rending Profile");
+
 const navigation = useNavigation();
 
   const handleLogout = () => {
