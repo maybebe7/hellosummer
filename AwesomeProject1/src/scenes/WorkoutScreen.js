@@ -16,7 +16,7 @@ console.log ("rending Workouts");
   useEffect(() => {
     setWorkouts(workoutsData);
     setLoading(false);
-  }, [setLoading]);
+  }, []);
 
   const getExerciseNames = (exercises) => {
     const names = exercises.map((id) => {
@@ -25,6 +25,8 @@ console.log ("rending Workouts");
     });
     return names.join(', ');
   };
+
+
 
   const renderWorkout = ({ item }) => (
     <TouchableOpacity

@@ -9,35 +9,20 @@ import Exercises from './scenes/Exercises';
 const Stack = createStackNavigator();
 
 const App = () => {
-
-console.log ("rending Navigation");
+  console.log('rendering Navigation');
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{
-        freezeOnBlur: true,
-        cardOverlayEnabled: true,
-        ...TransitionPresets.SlideFromRightIOS, }}>
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Main"
-          component={Main}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{ title: 'Profile' }}
-        />
-        <Stack.Screen
-          name="Exercises"
-          component={Exercises}
-          options={{ title: 'Exercises' }}
-        />
+      <Stack.Navigator
+        initialRouteName="Login"
+        screenOptions={{
+          headerShown: false,
+          ...TransitionPresets.SlideFromRightIOS,
+        }}>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+        <Stack.Screen name="Exercises" component={Exercises} options={{ title: 'Exercises' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
