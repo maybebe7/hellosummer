@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import styles from '../styles/ProgramsStyles';
 
-const Programs = ({ route }) => {
-  const { workoutId } = route.params;
+const Programs = ({ route, navigation }) => {
+  const { workoutId, workoutName } = route.params;
   const [trainings, setTrainings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,6 +18,7 @@ const Programs = ({ route }) => {
       .then(data => {
         setTrainings(data.results);
         setLoading(false);
+        navigation.setOptions({ title: workoutName });
       })
       .catch(error => {
         console.error(error);
