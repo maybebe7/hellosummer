@@ -1,53 +1,51 @@
-import React, { useState, useMemo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import styles from '../styles/ExerciseStyles';
-import workouts from '../data/workouts';
-import exercises from '../data/exercises';
-import ExerciseTable from '../components/atoms/ExerciseTable';
 
 const Exercises = ({ route }) => {
-  const { exercises: exerciseIds } = route.params;
+  const { workoutId } = route.params;
+  const [trainings, setTrainings] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  console.log ("rending Exercises");
-
-  const [collapsed, setCollapsed] = useState(true);
-
-  const exerciseDetails = useMemo(() => {
-    const details = {};
-    exerciseIds.forEach((id) => {
-      const exercise = exercises.find((e) => e._id === id);
-      if (exercise) {
-        details[id] = exercise;
-      } else {
-        //console.log(`Exercise with _id ${id} not found`);
+  useEffect(() => {
+    fetch(`https://wger.de/api/v2/day/?training=${workoutId}`, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Token 0de69ee316a5379fc468093947af6747bc74b2ae'
       }
-    });
-    return details;
-  }, [exerciseIds]);
+    })
+      .then(response => response.json())
+      .then(data => {
+        setTrainings(data.results);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, [workoutId]);
+
+  const renderTraining = (training) => {
+    return (
+      <TouchableOpacity
+        key={training.id}
+        style={styles.card}
+      >
+        <Text style={styles.title}>{training.description}</Text>
+        <Text style={styles.day}>{`Day ${training.day}`}</Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {exerciseIds.map((id, index) => {
-          const exercise = exerciseDetails[id];
-
-          return (
-            <TouchableOpacity
-              key={index}
-              style={[styles.exercise, { marginBottom: collapsed ? 10 : 0 }]}
-              onPress={() => setCollapsed(!collapsed)}
-            >
-              <Text style={styles.title}>{exercise.name}</Text>
-              <Text style={styles.setsReps}>{`${exercise.sets} sets x ${exercise.reps} reps`}</Text>
-              {collapsed ? null : (
-                <View style={styles.details}>
-                  <ExerciseTable sets={exercise.sets} />
-                </View>
-              )}
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <ScrollView>
+          {trainings.map((training) => renderTraining(training))}
+        </ScrollView>
+      )}
     </View>
   );
 };

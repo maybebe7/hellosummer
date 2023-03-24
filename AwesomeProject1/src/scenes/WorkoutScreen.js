@@ -1,46 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator} from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import workoutsData from '../data/workouts.json';
-import exercisesData from '../data/exercises.json';
 import styles from '../styles/WorkoutStyles';
 
 const WorkoutScreen = () => {
-
-console.log ("rending Workouts");
-
+  console.log("rendering Workouts");
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    setWorkouts(workoutsData);
-    setLoading(false);
+    fetch('https://wger.de/api/v2/workout/', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Token 0de69ee316a5379fc468093947af6747bc74b2ae'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setWorkouts(data.results);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setLoading(false);
+      });
   }, []);
 
-  const getExerciseNames = (exercises) => {
-    const names = exercises.map((id) => {
-      const exercise = exercisesData.find((e) => e._id === id);
-      return exercise ? exercise.name : '';
-    });
-    return names.join(', ');
-  };
+const renderWorkout = ({ item }) => (
+  <TouchableOpacity
+    key={item.id}
+    style={styles.card}
+    onPress={() =>
+      navigation.navigate('Exercises', { workoutId: item.id })
+    }
+  >
+    <Text style={styles.title}>{item.name}</Text>
+    <Text style={styles.description}>{item.description}</Text>
+  </TouchableOpacity>
+);
 
-
-
-  const renderWorkout = ({ item }) => (
-    <TouchableOpacity
-      key={item._id}
-      style={styles.card}
-      onPress={() =>
-        navigation.navigate('Exercises', { exercises: item.exercises })
-      }
-    >
-      <Text style={styles.title}>{item.name}</Text>
-      <Text style={styles.description}>{item.description}</Text>
-      <Text style={styles.exercises}>{getExerciseNames(item.exercises)}</Text>
-    </TouchableOpacity>
-  );
 
   return (
     <View style={styles.container}>
@@ -50,7 +50,7 @@ console.log ("rending Workouts");
         <FlatList
           data={workouts}
           renderItem={renderWorkout}
-          keyExtractor={(item) => item._id.toString()}
+          keyExtractor={(item) => item.id.toString()}
         />
       )}
     </View>
