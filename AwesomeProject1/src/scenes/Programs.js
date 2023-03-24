@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
-import styles from '../styles/ExerciseStyles';
+import styles from '../styles/ProgramsStyles';
 
-const Exercises = ({ route }) => {
+const Programs = ({ route }) => {
   const { workoutId } = route.params;
   const [trainings, setTrainings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,4 +50,4 @@ const Exercises = ({ route }) => {
   );
 };
 
-export default Exercises;
+export default Programs;

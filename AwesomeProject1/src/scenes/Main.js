@@ -56,7 +56,7 @@ const Main = () => {
               name="WorkoutScreen"
               component={WorkoutScreen}
               options={({ navigation }) => ({
-              headerTitle: 'My Workouts',
+              headerTitle: 'My Programs',
               tabBarLabel:() => {return null},
                 headerRight: () => (
                   <Icon

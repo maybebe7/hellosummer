@@ -33,7 +33,7 @@ const renderWorkout = ({ item }) => (
     key={item.id}
     style={styles.card}
     onPress={() =>
-      navigation.navigate('Exercises', { workoutId: item.id })
+      navigation.navigate('Programs', { workoutId: item.id })
     }
   >
     <Text style={styles.title}>{item.name}</Text>
