@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import styles from '../styles/ProgramsStyles';
 
-const Programs = ({ route, navigation }) => {
+const ProgramDetails = ({ route, navigation }) => {
   const { workoutId, workoutName } = route.params;
   const [trainings, setTrainings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,4 +51,4 @@ const Programs = ({ route, navigation }) => {
   );
 };
 
-export default Programs;
+export default ProgramDetails;

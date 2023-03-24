@@ -32,7 +32,7 @@ const renderWorkout = ({ item }) => (
   <TouchableOpacity
     key={item.id}
     style={styles.card}
-    onPress={() => navigation.navigate('Programs', { workoutId: item.id, workoutName: item.name })}
+    onPress={() => navigation.navigate('ProgramDetails', { workoutId: item.id, workoutName: item.name })}
   >
     <Text style={styles.title}>{item.name}</Text>
     <Text style={styles.description}>{item.description}</Text>

@@ -4,7 +4,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import Login from './scenes/Login';
 import Main from './scenes/Main';
 import Profile from './scenes/Profile';
-import Programs from './scenes/Programs';
+import ProgramDetails from './scenes/ProgramDetails';
 
 const Stack = createStackNavigator();
 
@@ -21,7 +21,7 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
         <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
-        <Stack.Screen name="Programs" component={Programs} options={{ title: 'Programs' }} />
+        <Stack.Screen name="ProgramDetails" component={ProgramDetails} options={{ title: 'Program Details' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
