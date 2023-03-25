@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import styles from '../styles/WorkoutStyles';
+import styles from '../styles/ProgramsStyles';
 
 const WorkoutScreen = () => {
   console.log("rendering Workouts");

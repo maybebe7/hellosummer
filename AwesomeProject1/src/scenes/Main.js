@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 //import styles from '../styles/HomeStyles';
 import Progress from '../scenes/Progress';
 import Home from '../scenes/Home';
-import WorkoutScreen from '../scenes/WorkoutScreen';
+import Programs from '../scenes/Programs';
 
 
 const Tab = createBottomTabNavigator();
@@ -21,7 +21,7 @@ const Main = () => {
         let iconName;
         if (route.name === 'Home') {
           iconName = 'home-outline';
-        } else if (route.name === 'WorkoutScreen') {
+        } else if (route.name === 'Programs') {
           iconName = 'barbell-outline';
         } else if (route.name === 'Progress') {
           iconName = 'stats-chart-outline';
@@ -53,8 +53,8 @@ const Main = () => {
         lazy={true}
       />
       <Tab.Screen
-              name="WorkoutScreen"
-              component={WorkoutScreen}
+              name="Programs"
+              component={Programs}
               options={({ navigation }) => ({
               headerTitle: 'My Programs',
               tabBarLabel:() => {return null},
