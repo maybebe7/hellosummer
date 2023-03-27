@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/ProgramsStyles';
 
 const WorkoutScreen = () => {
-  console.log("rendering Workouts");
+  console.log("rendering Programs");
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);

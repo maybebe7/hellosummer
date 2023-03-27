@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator
 import styles from '../styles/ProgramsStyles';
 
 const ProgramDetails = ({ route, navigation }) => {
+
+  console.log("rendering Programs Details");
   const { workoutId, workoutName } = route.params;
   const [trainings, setTrainings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,16 +29,22 @@ const ProgramDetails = ({ route, navigation }) => {
   }, [workoutId]);
 
   const renderTraining = (training) => {
+    const handleLogWorkoutPress = () => {
+      console.log('Training workout logged!');
+    };
+
     return (
       <TouchableOpacity
         key={training.id}
         style={styles.card}
+        onPress={handleLogWorkoutPress}
       >
         <Text style={styles.title}>{training.description}</Text>
         <Text style={styles.day}>{`Day ${training.day}`}</Text>
       </TouchableOpacity>
     );
   };
+
 
   return (
     <View style={styles.container}>
