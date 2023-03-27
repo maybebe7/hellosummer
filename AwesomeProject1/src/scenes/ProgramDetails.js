@@ -28,23 +28,25 @@ const ProgramDetails = ({ route, navigation }) => {
       });
   }, [workoutId]);
 
-  const renderTraining = (training) => {
-    const handleLogWorkoutPress = () => {
-      console.log('Training workout logged!');
-    };
+  const handleTrainingPress = (training) => {
+    navigation.navigate('ExerciseList', {
+      trainingId: training.training,
+      day: training.day[0],
+    });
+  };
 
+  const renderTraining = (training) => {
     return (
       <TouchableOpacity
         key={training.id}
         style={styles.card}
-        onPress={handleLogWorkoutPress}
+        onPress={() => handleTrainingPress(training)}
       >
         <Text style={styles.title}>{training.description}</Text>
-        <Text style={styles.day}>{`Day ${training.day}`}</Text>
+        <Text style={styles.day}>{`Day ${training.day[0]}`}</Text>
       </TouchableOpacity>
     );
   };
-
 
   return (
     <View style={styles.container}>
