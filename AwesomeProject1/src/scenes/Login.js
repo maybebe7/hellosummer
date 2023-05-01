@@ -5,17 +5,51 @@ import Input from '../components/atoms/Input';
 import Button from '../components/atoms/Button';
 import styles from '../styles/LoginStyles';
 
+import Realm from 'realm';
+
 const Login = () => {
-
-console.log ("rending Login");
-
   const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Implement your login logic here
-   navigation.navigate('Main');
+  const handleLogin = async () => {
+    try {
+      const appConfig = {
+        id: 'realmapp-izgbd',
+        timeout: 10000,
+      };
+      const app = new Realm.App(appConfig);
+
+      // Authenticate the user
+      const credentials = Realm.Credentials.emailPassword(
+        username,
+        password
+      );
+      const user = await app.logIn(credentials);
+
+      // Navigate to the main screen
+      navigation.navigate('Main');
+    } catch (error) {
+      console.error('Failed to log in', error);
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    try {
+      const appConfig = {
+        id: 'realmapp-izgbd',
+        timeout: 10000,
+      };
+      const app = new Realm.App(appConfig);
+
+      // Authenticate the user as an anonymous guest
+      const user = await app.logIn(Realm.Credentials.anonymous());
+
+      // Navigate to the main screen
+      navigation.navigate('Main');
+    } catch (error) {
+      console.error('Failed to log in as guest', error);
+    }
   };
 
   return (
@@ -33,6 +67,7 @@ console.log ("rending Login");
         value={password}
       />
       <Button onPress={handleLogin}>Login</Button>
+      <Button onPress={handleGuestLogin}>Login as Guest</Button>
     </View>
   );
 };

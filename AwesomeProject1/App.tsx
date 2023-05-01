@@ -1,8 +1,7 @@
 import React from 'react';
 import App from './src';
-import Realm from 'realm';
-import {createRealmContext} from '@realm/react';
-//import Programs from './src/schema/ProgramsSchema.js'
+import { Realm } from 'realm';
+import { AppProvider, createRealmContext } from '@realm/react';
 
 class Programs extends Realm.Object {
   static schema = {
@@ -16,23 +15,19 @@ class Programs extends Realm.Object {
 }
 
 const MainApp = () => {
+  const realmConfig = {
+    schema: [Programs],
+  };
 
-// Create a configuration object
- const realmConfig = {
-   schema: [Programs],
- };
-// Create a realm context
- const {RealmProvider, useRealm, useObject, useQuery} =
-   createRealmContext(realmConfig);
-
+  const { RealmProvider } = createRealmContext(realmConfig);
 
   return (
+    <AppProvider id="realmapp-izgbd">
       <RealmProvider>
         <App />
       </RealmProvider>
-    );
-
+    </AppProvider>
+  );
 };
-
 
 export default MainApp;
