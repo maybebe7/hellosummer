@@ -1,0 +1,8 @@
+{
+  "appId": "realmapp-izgbd",
+  "appUrl": "https://realm.mongodb.com/groups/63fe51eb9e0d34067cd96a0f/apps/644ea0991eb0f3ed02345795",
+  "baseUrl": "https://realm.mongodb.com",
+  "clientApiBaseUrl": "https://eu-west-2.aws.realm.mongodb.com",
+  "dataApiBaseUrl": "https://eu-west-2.aws.data.mongodb-api.com",
+  "dataSourceName": "mongodb-atlas"
+}

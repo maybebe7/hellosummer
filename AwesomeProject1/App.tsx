@@ -3,6 +3,8 @@ import App from './src';
 import { Realm } from 'realm';
 import { AppProvider, createRealmContext } from '@realm/react';
 
+import { appId } from './src/atlasConfig.json';
+
 class Programs extends Realm.Object {
   static schema = {
     name: 'Programs',
@@ -22,7 +24,7 @@ const MainApp = () => {
   const { RealmProvider } = createRealmContext(realmConfig);
 
   return (
-    <AppProvider id="realmapp-izgbd">
+    <AppProvider id={appId}>
       <RealmProvider>
         <App />
       </RealmProvider>

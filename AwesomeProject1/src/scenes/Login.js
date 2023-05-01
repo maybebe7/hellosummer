@@ -6,23 +6,24 @@ import Button from '../components/atoms/Button';
 import styles from '../styles/LoginStyles';
 
 import Realm from 'realm';
+import atlasConfig from '../atlasConfig.json';
 
 const Login = () => {
   const navigation = useNavigation();
-  const [username, setUsername] = useState('');
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     try {
       const appConfig = {
-        id: 'realmapp-izgbd',
+        id: atlasConfig.appId,
         timeout: 10000,
       };
       const app = new Realm.App(appConfig);
 
       // Authenticate the user
       const credentials = Realm.Credentials.emailPassword(
-        username,
+        email,
         password
       );
       const user = await app.logIn(credentials);
@@ -37,7 +38,7 @@ const Login = () => {
   const handleGuestLogin = async () => {
     try {
       const appConfig = {
-        id: 'realmapp-izgbd',
+        id: atlasConfig.appId,
         timeout: 10000,
       };
       const app = new Realm.App(appConfig);
@@ -56,9 +57,9 @@ const Login = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
       <Input
-        placeholder="Username"
+        placeholder="Email"
         onChangeText={setUsername}
-        value={username}
+        value={email}
       />
       <Input
         placeholder="Password"
