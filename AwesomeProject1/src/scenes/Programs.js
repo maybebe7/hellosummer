@@ -1,44 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/ProgramsStyles';
 
+import Realm from 'realm';
+import atlasConfig from '../atlasConfig.json';
+import { realmContext } from '../RealmContext';
+
 const WorkoutScreen = () => {
-  console.log("rendering Programs");
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
+  const { app, collection } = realmContext;
 
   useEffect(() => {
-    fetch('https://wger.de/api/v2/workout/', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Token 0de69ee316a5379fc468093947af6747bc74b2ae'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setWorkouts(data.results);
+    const fetchWorkouts = async () => {
+      try {
+        // Log in to the Realm app
+        const user = await app.logIn(Realm.Credentials.anonymous());
+
+        // Fetch the user's programs from the collection
+        const results = await collection('programs').find();
+
+        setWorkouts(results);
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error(error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchWorkouts();
   }, []);
 
-const renderWorkout = ({ item }) => (
-  <TouchableOpacity
-    key={item.id}
-    style={styles.card}
-    onPress={() => navigation.navigate('ProgramDetails', { workoutId: item.id, workoutName: item.name })}
-  >
-    <Text style={styles.title}>{item.name}</Text>
-    <Text style={styles.description}>{item.description}</Text>
-  </TouchableOpacity>
-);
-
+  const renderWorkout = ({ item }) => (
+    <TouchableOpacity
+      key={item._id.toString()}
+      style={styles.card}
+      onPress={() => navigation.navigate('ProgramDetails', { workoutId: item._id.toString(), workoutName: item.name })}
+    >
+      <Text style={styles.title}>{item.name}</Text>
+      <Text style={styles.description}>{item.description}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
@@ -48,7 +52,7 @@ const renderWorkout = ({ item }) => (
         <FlatList
           data={workouts}
           renderItem={renderWorkout}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item._id.toString()}
         />
       )}
     </View>
